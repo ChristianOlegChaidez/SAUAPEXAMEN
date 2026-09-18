@@ -5,26 +5,30 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:p="http://primefaces.org/ui">
     <h:head>
-        <title>Facelet Title</title>
+        <title>Bienvenido - SAUP</title>
     </h:head>
     <h:body>
         <p:panelGrid class="txt">
-            <f:facet name="header">  
+            <f:facet name="header">
                 <p:row>
-                    <p:column colspan="7"><p:graphicImage url="resources/user.png" class="logo"/></p:column>
+                    <p:column colspan="2"><p:graphicImage url="resources/user.png" class="logo"/></p:column>
                 </p:row>
             </f:facet>
             <p:row>
-                <p:column styleClass="celda">Nombre:</p:column>
-                <p:column><h:outputText value="#{loginUI.usuario.idAlumno.nombre}" /></p:column>
+                <p:column styleClass="celda">Nombre(s):</p:column>
+                <p:column><h:outputText value="#{loginUI.profesor.nombres}" /></p:column>
             </p:row>
             <p:row>
-                <p:column styleClass="celda">Apellido:</p:column>
-                <p:column><h:outputText value="#{loginUI.usuario.idAlumno.apellidos}" /></p:column>
+                <p:column styleClass="celda">Apellido paterno:</p:column>
+                <p:column><h:outputText value="#{loginUI.profesor.apellidoPaterno}" /></p:column>
             </p:row>
             <p:row>
-                <p:column styleClass="celda">Matricula:</p:column>
-                <p:column><h:outputText value="#{loginUI.usuario.idAlumno.matricula}" /></p:column>
+                <p:column styleClass="celda">Apellido materno:</p:column>
+                <p:column><h:outputText value="#{loginUI.profesor.apellidoMaterno}" /></p:column>
+            </p:row>
+            <p:row>
+                <p:column styleClass="celda">RFC:</p:column>
+                <p:column><h:outputText value="#{loginUI.profesor.rfc}" /></p:column>
             </p:row>
         </p:panelGrid>
     </h:body>
@@ -50,8 +54,7 @@
                 background: white;
                 border-radius: 5px;
                 box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-            
+
         }
     </style>
 </html>
-

@@ -8,7 +8,6 @@ import jakarta.faces.context.FacesContext;
 import jakarta.inject.Named;
 import mx.desarrollo.entity.Profesor;
 
-import java.io.IOException;
 import java.io.Serializable;
 
 @Named("loginUI")
@@ -18,6 +17,7 @@ public class LoginBeanUI implements Serializable {
     private LoginHelper loginHelper;
     private Profesor profesor;
     private String rfc;
+    private String password;
 
     public LoginBeanUI() {
         loginHelper = new LoginHelper();
@@ -27,24 +27,27 @@ public class LoginBeanUI implements Serializable {
     public void init() {
         profesor = new Profesor();
         rfc = "";
+        password = "";
     }
 
-    public void login() throws IOException {
-        String appURL = "/index.xhtml";
+    public String login() {
+        if (rfc == null || rfc.trim().isEmpty()) {
+            FacesContext.getCurrentInstance().addMessage(null,
+                    new FacesMessage(FacesMessage.SEVERITY_WARN,
+                            "RFC requerido:", "Capture su RFC"));
+            return null;
+        }
 
-        Profesor encontrado = loginHelper.buscarPorRFC(rfc);
+        Profesor encontrado = loginHelper.buscarPorRFC(rfc.trim());
 
         if (encontrado != null && encontrado.getId() != null) {
             profesor = encontrado;
-            FacesContext.getCurrentInstance()
-                    .getExternalContext()
-                    .redirect(FacesContext.getCurrentInstance()
-                            .getExternalContext()
-                            .getRequestContextPath() + appURL);
+            return "index?faces-redirect=true";
         } else {
             FacesContext.getCurrentInstance().addMessage(null,
                     new FacesMessage(FacesMessage.SEVERITY_WARN,
                             "RFC no encontrado:", "Intente de nuevo"));
+            return null;
         }
     }
 
@@ -52,6 +55,13 @@ public class LoginBeanUI implements Serializable {
     public Profesor getProfesor() { return profesor; }
     public void setProfesor(Profesor profesor) { this.profesor = profesor; }
 
+    // Alias para compatibilidad con vistas que usen "usuario"
+    public Profesor getUsuario() { return profesor; }
+    public void setUsuario(Profesor usuario) { this.profesor = usuario; }
+
     public String getRfc() { return rfc; }
     public void setRfc(String rfc) { this.rfc = rfc; }
+
+    public String getPassword() { return password; }
+    public void setPassword(String password) { this.password = password; }
 }
