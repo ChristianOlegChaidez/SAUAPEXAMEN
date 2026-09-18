@@ -1,0 +1,33 @@
+package mx.desarrollo.persistence.persistence;
+
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.Persistence;
+
+public class HibernateUtil {
+
+    private static final EntityManagerFactory ENTITY_MANAGER_FACTORY = buildEntityManagerFactory();
+
+    private static EntityManagerFactory buildEntityManagerFactory() {
+        try {
+            return Persistence.createEntityManagerFactory("entity_prueba1PU");
+        } catch (Throwable ex) {
+            System.err.println("Error creando EntityManagerFactory: " + ex);
+            throw new ExceptionInInitializerError(ex);
+        }
+    }
+
+    public static EntityManagerFactory getEntityManagerFactory() {
+        return ENTITY_MANAGER_FACTORY;
+    }
+
+    public static EntityManager getEntityManager() {
+        return ENTITY_MANAGER_FACTORY.createEntityManager();
+    }
+
+    public static void close() {
+        if (ENTITY_MANAGER_FACTORY != null && ENTITY_MANAGER_FACTORY.isOpen()) {
+            ENTITY_MANAGER_FACTORY.close();
+        }
+    }
+}
