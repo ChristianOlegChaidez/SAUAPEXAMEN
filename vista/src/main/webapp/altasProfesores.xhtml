@@ -48,6 +48,49 @@
       color: black;
     }
 
+    .ui-growl-item-container {
+      background-color: #888 !important;
+      border: none !important;
+      border-radius: 4px !important;
+      overflow: hidden !important;
+    }
+
+    .ui-growl-error .ui-growl-item {
+      background-color: #888 !important;
+      padding: 0 !important;
+    }
+
+    .ui-growl-error .ui-growl-item:before {
+      content: 'Error' !important;
+      display: block !important;
+      background-color: #e53935 !important;
+      color: white !important;
+      padding: 8px 12px !important;
+      font-weight: bold !important;
+    }
+
+    .ui-growl-info .ui-growl-item:before {
+      content: 'Éxito' !important;
+      display: block !important;
+      background-color: #1a6b4a !important;
+      color: white !important;
+      padding: 8px 12px !important;
+      font-weight: bold !important;
+    }
+
+    .ui-growl-item .ui-growl-image {
+      display: none !important;
+    }
+
+    .ui-growl-message {
+      padding: 10px !important;
+      color: black !important;
+    }
+
+    .ui-growl-title {
+      display: none !important;
+    }
+
     .btn-registrar {
       position: fixed;
       bottom: 10px;
@@ -60,7 +103,7 @@
   <div class="header">Registro profesores</div>
 
   <h:form>
-    <p:messages id="messages" showDetail="true" closable="true"/>
+    <p:growl id="messages" showDetail="true" showSummary="true" life="4000"/>
 
     <div class="contenido">
       <div class="campo">

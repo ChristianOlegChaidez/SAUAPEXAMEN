@@ -22,10 +22,10 @@ public class RegistroProfesorBean implements Serializable {
             profesor = new Profesor();
         } catch (IllegalArgumentException e) {
             FacesContext.getCurrentInstance().addMessage(null,
-                    new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "El RFC no cumple el formato establecido"));
+                    new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", e.getMessage()));
         } catch (IllegalStateException e) {
             FacesContext.getCurrentInstance().addMessage(null,
-                    new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "El RFC ya está registrado"));
+                    new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", e.getMessage()));
         } catch (Exception e) {
             FacesContext.getCurrentInstance().addMessage(null,
                     new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "No se pudo registrar el profesor"));

@@ -2,59 +2,74 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:p="http://primefaces.org/ui">
-    <h:head>
-        <title>Bienvenido - SAUP</title>
-    </h:head>
-    <h:body>
-        <p:panelGrid class="txt">
-            <f:facet name="header">
-                <p:row>
-                    <p:column colspan="2"><p:graphicImage url="resources/user.png" class="logo"/></p:column>
-                </p:row>
-            </f:facet>
-            <p:row>
-                <p:column styleClass="celda">Nombre(s):</p:column>
-                <p:column><h:outputText value="#{loginUI.profesor.nombres}" /></p:column>
-            </p:row>
-            <p:row>
-                <p:column styleClass="celda">Apellido paterno:</p:column>
-                <p:column><h:outputText value="#{loginUI.profesor.apellidoPaterno}" /></p:column>
-            </p:row>
-            <p:row>
-                <p:column styleClass="celda">Apellido materno:</p:column>
-                <p:column><h:outputText value="#{loginUI.profesor.apellidoMaterno}" /></p:column>
-            </p:row>
-            <p:row>
-                <p:column styleClass="celda">RFC:</p:column>
-                <p:column><h:outputText value="#{loginUI.profesor.rfc}" /></p:column>
-            </p:row>
-        </p:panelGrid>
-    </h:body>
-    <style>
-        .logo{
-            width: 170px;
-        }
-        .celda{
-            width: 25%;
-            background-color: #089b4d;
-            color:white;
-        }
-        .txt{
-                position: absolute;
-                top:0;
-                bottom: 0;
-                left: 0;
-                right: 0;
-                height: 35%;
-                width: 25%;
-                padding: 25px;
-                margin: auto;
-                background: white;
-                border-radius: 5px;
-                box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 
+<h:head>
+    <title>SAUP</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: Arial, sans-serif; background: white; }
+
+        .header {
+            background-color: #1a6b4a;
+            color: black;
+            padding: 20px 30px;
+            font-size: 36px;
+            font-weight: bold;
+        }
+
+        .footer {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            background-color: #c8b84a;
+            padding: 20px;
+        }
+
+        .contenido {
+            padding: 40px;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-bottom: 80px;
+        }
+
+        .btn-menu {
+            padding: 20px;
+            font-size: 14px;
+            font-weight: bold;
+            background-color: #d9d9d9;
+            border: 2px solid #333;
+            border-radius: 12px;
+            cursor: pointer;
+            text-align: center;
+            text-decoration: none;
+            color: black;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 60px;
+        }
+
+        .btn-menu:hover {
+            background-color: #c0c0c0;
         }
     </style>
+</h:head>
+
+<h:body>
+    <div class="header">Sauap</div>
+
+    <div class="contenido">
+        <a class="btn-menu" href="altasProfesores.xhtml">Alta profesores</a>
+        <a class="btn-menu" href="#">Alta asignacion</a>
+        <a class="btn-menu" href="#">Alta unidad de aprendizaje</a>
+        <a class="btn-menu" href="#">Modificacion asignacion</a>
+        <a class="btn-menu" href="#">Modificacion unidad de aprendizaje</a>
+        <a class="btn-menu" href="#">Eliminar unidad de aprendizaje</a>
+        <a class="btn-menu" href="#">Eliminar asignacion</a>
+    </div>
+
+    <div class="footer"></div>
+</h:body>
 </html>

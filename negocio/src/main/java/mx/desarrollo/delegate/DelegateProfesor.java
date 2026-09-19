@@ -18,6 +18,18 @@ public class DelegateProfesor {
             throw new IllegalArgumentException("RFC con formato inválido");
         }
 
+        if (profesor.getNombres().length() > 50) {
+            throw new IllegalArgumentException("El nombre no puede exceder 50 caracteres");
+        }
+
+        if (profesor.getApellidoPaterno().length() > 50) {
+            throw new IllegalArgumentException("El apellido paterno no puede exceder 50 caracteres");
+        }
+
+        if (profesor.getApellidoMaterno() != null && profesor.getApellidoMaterno().length() > 50) {
+            throw new IllegalArgumentException("El apellido materno no puede exceder 50 caracteres");
+        }
+
         List<Profesor> existentes = ServiceLocator.getInstanceProfesorDAO()
                 .findByOneParameter(profesor.getRfc(), "rfc");
 
