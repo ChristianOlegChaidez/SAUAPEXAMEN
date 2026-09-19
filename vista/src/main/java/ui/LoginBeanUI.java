@@ -51,6 +51,8 @@ public class LoginBeanUI implements Serializable {
         }
     }
 
+
+
     // Getters y setters
     public Profesor getProfesor() { return profesor; }
     public void setProfesor(Profesor profesor) { this.profesor = profesor; }

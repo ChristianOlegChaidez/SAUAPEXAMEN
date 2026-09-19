@@ -23,8 +23,14 @@ public class AsignacionDAO extends AbstractDAO<Asignacion> {
 
     public List<Asignacion> obtenerPorProfesor(Integer idProfesor) {
         return entityManager
-                .createQuery("SELECT a FROM Asignacion a WHERE a.idProfesor.idProfesor = :id", Asignacion.class)
+                .createQuery("SELECT a FROM Asignacion a WHERE a.idProfesor = :id", Asignacion.class)
                 .setParameter("id", idProfesor)
+                .getResultList();
+    }
+
+    public List<Asignacion> consultarAsignaciones(){
+        return entityManager
+                .createQuery("FROM Asignacion a JOIN FETCH a.idProfesor JOIN FETCH a.idUnidad ORDER BY a.idProfesor.nombres", Asignacion.class)
                 .getResultList();
     }
 

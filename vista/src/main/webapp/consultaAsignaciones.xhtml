@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="jakarta.faces.core"
+      xmlns:h="jakarta.faces.html"
+      xmlns:p="http://primefaces.org/ui">
+<f:view>
+    <h:head>
+        <style>
+            .tabla-asignaciones th.ui-state-default{
+                background: #DEDEDE !important;
+                color: #000000 !important;
+                border: 1px solid #B0B0B0 !important;
+            }
+            .tabla-asignaciones tbody tr {
+                background: #D9D9D9 !important;
+                border: 1px solid #B0B0B0 !important;
+            }
+            .encabezado {
+                background-color: #2A714F;
+                color: black;
+                padding: 15px;
+                margin: 0;
+            }
+            .piePagina {
+                background-color: #A29201;
+                color: white;
+                padding: 15px;
+                margin-top: auto;
+                font-size: 24px;
+            }
+            html, body {
+                height: 100%;
+                margin: 0;
+            }
+
+            body {
+                display: flex;
+                flex-direction: column;
+                min-height: 100vh;
+            }
+            .tabla-asignaciones  {
+                border-radius: 10px;
+                overflow: hidden;
+            }
+            .dialogo-aviso .ui-dialog-titlebar {
+                background: #C62828 !important;
+                color: black !important;
+            }
+            .dialogo-aviso .ui-dialog-content {
+                background: #B0B0B0 !important;
+            }
+        </style>
+    </h:head>
+    <h:body>
+        <div class="encabezado">
+            <h1 style="margin: 0">Consultas de Asignaciones</h1>
+        </div>
+        <h:form style="margin: 20px;">
+            <p:dataTable value="#{consultaAsignacionUI.listaAsignaciones}" var="a" styleClass="tabla-asignaciones"
+                         rendered="#{not empty consultaAsignacionUI.listaAsignaciones}">
+                <p:column headerText="Profesor">
+                    <h:outputText value="#{a.idProfesor.nombres}" />
+                    <p:spacer width="7" />
+                    <h:outputText value="#{a.idProfesor.apellidoPaterno}" />
+                    <p:spacer width="7" />
+                    <h:outputText value="#{a.idProfesor.apellidoMaterno}" />
+                </p:column>
+                <p:column headerText="Horas Clase">
+                    <h:outputText value="#{a.idUnidad.hrClase}" />
+                </p:column>
+                <p:column headerText="Horas Taller">
+                    <h:outputText value="#{a.idUnidad.hrTaller}" />
+                </p:column>
+                <p:column headerText="Horas Laboratorio">
+                    <h:outputText value="#{a.idUnidad.hrLaboratorio}" />
+                </p:column>
+                <p:column headerText="Unidad de Aprendizaje">
+                    <h:outputText value="#{a.idUnidad.nombreUnidad}" />
+                </p:column>
+            </p:dataTable>
+            <p:dialog header="Aviso" widgetVar="ventanitaSinAsignaciones" modal="true"
+                      visible="#{empty consultaAsignacionUI.listaAsignaciones}"
+                      closable="true" resizable="false" width="350"
+                      styleClass="dialogo-aviso">
+                <p:outputPanel style="text-align: center; padding: 10px;">
+                    <h:outputText value="Error: No hay asignaciones." />
+                </p:outputPanel>
+            </p:dialog>
+        </h:form>
+        <div class="piePagina">
+            <p:commandLink value="🔙" action="index?faces-redirect=true"></p:commandLink>
+        </div>
+    </h:body>
+</f:view>
+</html>

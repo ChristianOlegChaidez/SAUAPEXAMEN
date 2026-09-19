@@ -20,4 +20,8 @@ public class FacadeAsignacion {
     public List<Asignacion> obtenerTodos() {
         return delegateAsignacion.obtenerTodos();
     }
+
+    public List<Asignacion> consultarAsignaciones() {
+        return delegateAsignacion.consultarAsignaciones();
+    }
 }
