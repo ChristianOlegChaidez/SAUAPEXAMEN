@@ -21,6 +21,10 @@ public class ProfesorDAO extends AbstractDAO<Profesor> {
                 .getResultList();
     }
 
+    public void insertarProfesor(Profesor profesor) {
+        save(profesor);
+    }
+
     @Override
     public EntityManager getEntityManager() {
         return entityManager;

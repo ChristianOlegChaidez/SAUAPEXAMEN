@@ -1,0 +1,97 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+  <title>Registro Profesores</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: Arial, sans-serif; background: white; }
+
+    .header {
+      background-color: #1a6b4a;
+      color: white;
+      padding: 20px 30px;
+      font-size: 24px;
+      font-weight: bold;
+    }
+
+    .contenido {
+      padding: 30px;
+      display: flex;
+      gap: 20px;
+      align-items: flex-start;
+    }
+
+    .campo {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      font-size: 14px;
+    }
+
+    .footer {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      background-color: #c8b84a;
+      padding: 15px 20px;
+      display: flex;
+      align-items: center;
+    }
+
+    .footer a {
+      font-size: 20px;
+      text-decoration: none;
+      color: black;
+    }
+
+    .btn-registrar {
+      position: fixed;
+      bottom: 10px;
+      right: 20px;
+    }
+  </style>
+</h:head>
+
+<h:body>
+  <div class="header">Registro profesores</div>
+
+  <h:form>
+    <p:messages id="messages" showDetail="true" closable="true"/>
+
+    <div class="contenido">
+      <div class="campo">
+        <p:outputLabel value="Nombre"/>
+        <p:inputText value="#{registroProfesorBean.profesor.nombres}" required="true"/>
+      </div>
+      <div class="campo">
+        <p:outputLabel value="Apellido paterno"/>
+        <p:inputText value="#{registroProfesorBean.profesor.apellidoPaterno}" required="true"/>
+      </div>
+      <div class="campo">
+        <p:outputLabel value="Apellido materno"/>
+        <p:inputText value="#{registroProfesorBean.profesor.apellidoMaterno}"/>
+      </div>
+      <div class="campo">
+        <p:outputLabel value="RFC"/>
+        <p:inputText value="#{registroProfesorBean.profesor.rfc}" required="true"/>
+      </div>
+    </div>
+
+
+
+    <div class="footer">
+      <a href="index.xhtml">←</a>
+      <div style="margin-left: auto;">
+        <p:commandButton value="Registrar"
+                         action="#{registroProfesorBean.registrarProfesor()}"
+                         update="messages @form"
+                         resetValues="true"/>
+      </div>
+    </div>
+  </h:form>
+</h:body>
+</html>
