@@ -1,4 +1,4 @@
-package mx.desarrollo.ui;
+package ui;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Named;

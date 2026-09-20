@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="jakarta.faces.core"
+      xmlns:h="jakarta.faces.html"
+      xmlns:p="http://primefaces.org/ui">
+<f:view>
+    <h:head>
+        <style>
+            .encabezado {
+                background-color: #2A714F;
+                color: black;
+                padding: 15px;
+                margin: 0;
+            }
+            .piePagina {
+                background-color: #A29201;
+                color: white;
+                padding: 15px;
+                margin-top: auto;
+                font-size: 24px;
+            }
+            html, body {
+                height: 100%;
+                margin: 0;
+            }
+            body {
+                display: flex;
+                flex-direction: column;
+                min-height: 100vh;
+            }
+            .form-editar {
+                background: #D9D9D9;
+                border-radius: 10px;
+                padding: 20px;
+                max-width: 400px;
+            }
+        </style>
+    </h:head>
+    <h:body>
+        <div class="encabezado">
+            <h1 style="margin: 0">Modificación de Asignaciones</h1>
+        </div>
+
+        <h:form style="margin: 20px;">
+            <p:panel header="Editar Asignación" styleClass="form-editar">
+
+                <h:outputText value="Profesor: #{modificarAsignacionUI.asignacionSeleccionada.idProfesor.nombres} #{modificarAsignacionUI.asignacionSeleccionada.idProfesor.apellidoPaterno}" />
+                <br/><br/>
+                <h:outputText value="Unidad: #{modificarAsignacionUI.asignacionSeleccionada.idUnidad.nombreUnidad}" />
+                <br/><br/>
+
+                <p:outputLabel value="Día de la semana" />
+                <br/>
+                <p:selectOneMenu value="#{modificarAsignacionUI.asignacionSeleccionada.diaSemana}">
+                    <f:selectItem itemLabel="Lunes" itemValue="Lunes" />
+                    <f:selectItem itemLabel="Martes" itemValue="Martes" />
+                    <f:selectItem itemLabel="Miércoles" itemValue="Miércoles" />
+                    <f:selectItem itemLabel="Jueves" itemValue="Jueves" />
+                    <f:selectItem itemLabel="Viernes" itemValue="Viernes" />
+                </p:selectOneMenu>
+                <br/><br/>
+
+                <p:outputLabel value="Hora Inicio" />
+                <br/>
+                <p:inputMask value="#{modificarAsignacionUI.asignacionSeleccionada.hrInicio}" mask="99:99">
+                    <f:convertDateTime type="localTime" pattern="HH:mm" />
+                </p:inputMask>
+                <br/><br/>
+
+                <p:outputLabel value="Hora Fin" />
+                <br/>
+                <p:inputMask value="#{modificarAsignacionUI.asignacionSeleccionada.hrFin}" mask="99:99">
+                    <f:convertDateTime type="localTime" pattern="HH:mm" />
+                </p:inputMask>
+                <br/><br/>
+
+                <p:outputLabel value="Tipo de Hora" />
+                <br/>
+                <p:selectOneMenu value="#{modificarAsignacionUI.asignacionSeleccionada.tipoHora}">
+                    <f:selectItem itemLabel="Clase" itemValue="Clase" />
+                    <f:selectItem itemLabel="Taller" itemValue="Taller" />
+                    <f:selectItem itemLabel="Laboratorio" itemValue="Laboratorio" />
+                </p:selectOneMenu>
+                <br/><br/>
+
+                <p:commandButton value="Modificar" action="#{modificarAsignacionUI.modificarConNavegacion()}" />
+            </p:panel>
+        </h:form>
+
+        <div class="piePagina">
+            <p:commandLink value="🔙" action="modificarAsignacionResultados?faces-redirect=true"></p:commandLink>
+        </div>
+    </h:body>
+</f:view>
+</html>

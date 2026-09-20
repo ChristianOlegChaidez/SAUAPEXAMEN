@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="jakarta.faces.core"
+      xmlns:h="jakarta.faces.html"
+      xmlns:p="http://primefaces.org/ui">
+<f:view>
+    <h:head>
+        <style>
+            .tabla-asignaciones th.ui-state-default{
+                background: #DEDEDE !important;
+                color: #000000 !important;
+                border: 1px solid #B0B0B0 !important;
+            }
+            .tabla-asignaciones tbody tr {
+                background: #D9D9D9 !important;
+                border: 1px solid #B0B0B0 !important;
+            }
+            .tabla-asignaciones {
+                border-radius: 10px;
+                overflow: hidden;
+            }
+            .encabezado {
+                background-color: #2A714F;
+                color: black;
+                padding: 15px;
+                margin: 0;
+            }
+            .piePagina {
+                background-color: #A29201;
+                color: white;
+                padding: 15px;
+                margin-top: auto;
+                font-size: 24px;
+            }
+            html, body {
+                height: 100%;
+                margin: 0;
+            }
+            body {
+                display: flex;
+                flex-direction: column;
+                min-height: 100vh;
+            }
+        </style>
+    </h:head>
+    <h:body>
+        <div class="encabezado">
+            <h1 style="margin: 0">Modificación de Asignaciones</h1>
+        </div>
+
+        <h:form style="margin: 20px;">
+            <p:dataTable value="#{modificarAsignacionUI.resultadosBusqueda}" var="a" styleClass="tabla-asignaciones"
+                         emptyMessage="No se encontraron asignaciones para esa unidad">
+                <p:column headerText="Profesor">
+                    <h:outputText value="#{a.idProfesor.nombres} #{a.idProfesor.apellidoPaterno}" />
+                </p:column>
+                <p:column headerText="Día">
+                    <h:outputText value="#{a.diaSemana}" />
+                </p:column>
+                <p:column headerText="Hora Inicio">
+                    <h:outputText value="#{a.hrInicio}" />
+                </p:column>
+                <p:column headerText="Hora Fin">
+                    <h:outputText value="#{a.hrFin}" />
+                </p:column>
+                <p:column headerText="Tipo">
+                    <h:outputText value="#{a.tipoHora}" />
+                </p:column>
+                <p:column headerText="Unidad de Aprendizaje">
+                    <h:outputText value="#{a.idUnidad.nombreUnidad}" />
+                </p:column>
+                <p:column headerText="Modificar">
+                    <p:commandLink action="#{modificarAsignacionUI.seleccionarYNavegar(a)}">
+                        ✏️
+                    </p:commandLink>
+                </p:column>
+            </p:dataTable>
+        </h:form>
+
+        <div class="piePagina">
+            <p:commandLink value="🔙" action="modificarAsignacionBusqueda?faces-redirect=true"></p:commandLink>
+        </div>
+    </h:body>
+</f:view>
+</html>

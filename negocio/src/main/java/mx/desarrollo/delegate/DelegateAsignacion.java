@@ -17,4 +17,12 @@ public class DelegateAsignacion {
     public List<Asignacion> consultarAsignaciones() {
         return ServiceLocator.getInstanceAsignacionDAO().consultarAsignaciones();
     }
+
+    public List<Asignacion> consultarPorNombreUnidad(String nombreUnidad) {
+        return ServiceLocator.getInstanceAsignacionDAO().consultarPorNombreUnidad(nombreUnidad);
+    }
+
+    public void modificarAsignacion(Asignacion asignacion) {
+        ServiceLocator.getInstanceAsignacionDAO().saveOrUpdate(asignacion);
+    }
 }

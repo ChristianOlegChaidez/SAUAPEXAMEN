@@ -2,6 +2,7 @@ package mx.desarrollo.facade;
 
 import mx.desarrollo.delegate.DelegateAsignacion;
 import mx.desarrollo.entity.Asignacion;
+import mx.desarrollo.persistence.integration.ServiceLocator;
 
 import java.util.List;
 
@@ -23,5 +24,13 @@ public class FacadeAsignacion {
 
     public List<Asignacion> consultarAsignaciones() {
         return delegateAsignacion.consultarAsignaciones();
+    }
+
+    public List<Asignacion> consultarPorNombreUnidad(String nombreUnidad) {
+        return ServiceLocator.getInstanceAsignacionDAO().consultarPorNombreUnidad(nombreUnidad);
+    }
+
+    public void modificarAsignacion(Asignacion asignacion) {
+        delegateAsignacion.modificarAsignacion(asignacion);
     }
 }

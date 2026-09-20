@@ -34,6 +34,13 @@ public class AsignacionDAO extends AbstractDAO<Asignacion> {
                 .getResultList();
     }
 
+    public List<Asignacion> consultarPorNombreUnidad(String nombreUnidad) {
+        return entityManager
+                .createQuery("FROM Asignacion a JOIN FETCH a.idProfesor JOIN FETCH a.idUnidad WHERE LOWER(a.idUnidad.nombreUnidad) LIKE LOWER(:nombre)", Asignacion.class)
+                .setParameter("nombre", "%" + nombreUnidad + "%")
+                .getResultList();
+    }
+
     @Override
     public EntityManager getEntityManager() {
         return entityManager;
