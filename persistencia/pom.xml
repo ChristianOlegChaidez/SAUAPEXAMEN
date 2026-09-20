@@ -33,8 +33,12 @@
             <version>6.6.11.Final</version>
         </dependency>
 
-
-
+        <!-- ANTLR4 Runtime (requerido por Hibernate, a veces no se resuelve como transitiva) -->
+        <dependency>
+            <groupId>org.antlr</groupId>
+            <artifactId>antlr4-runtime</artifactId>
+            <version>4.13.0</version>
+        </dependency>
 
         <!-- HikariCP (Conexiones eficientes) -->
         <dependency>

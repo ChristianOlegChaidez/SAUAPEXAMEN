@@ -13,4 +13,8 @@ public class DelegateAsignacion {
     public List<Asignacion> obtenerTodos() {
         return ServiceLocator.getInstanceAsignacionDAO().findAll();
     }
+
+    public List<Asignacion> consultarAsignaciones() {
+        return ServiceLocator.getInstanceAsignacionDAO().consultarAsignaciones();
+    }
 }
