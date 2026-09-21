@@ -4,6 +4,7 @@ import jakarta.persistence.EntityManager;
 import mx.desarrollo.persistence.persistence.AbstractDAO;
 import mx.desarrollo.entity.Asignacion;
 
+import java.time.LocalTime;
 import java.util.List;
 
 public class AsignacionDAO extends AbstractDAO<Asignacion> {
@@ -39,6 +40,21 @@ public class AsignacionDAO extends AbstractDAO<Asignacion> {
                 .createQuery("FROM Asignacion a JOIN FETCH a.idProfesor JOIN FETCH a.idUnidad WHERE LOWER(a.idUnidad.nombreUnidad) LIKE LOWER(:nombre)", Asignacion.class)
                 .setParameter("nombre", "%" + nombreUnidad + "%")
                 .getResultList();
+    }
+
+    public boolean existeTraslape(Integer idProfesor, String diaSemana, LocalTime hrInicio, LocalTime hrFin, Integer idAsignacionActual) {
+        List<Asignacion> resultado = entityManager
+                .createQuery("FROM Asignacion a WHERE a.idProfesor.id = :idProfesor " +
+                        "AND a.diaSemana = :dia " +
+                        "AND a.id != :idActual " +
+                        "AND a.hrInicio < :hrFin AND a.hrFin > :hrInicio", Asignacion.class)
+                .setParameter("idProfesor", idProfesor)
+                .setParameter("dia", diaSemana)
+                .setParameter("idActual", idAsignacionActual)
+                .setParameter("hrInicio", hrInicio)
+                .setParameter("hrFin", hrFin)
+                .getResultList();
+        return !resultado.isEmpty();
     }
 
     @Override

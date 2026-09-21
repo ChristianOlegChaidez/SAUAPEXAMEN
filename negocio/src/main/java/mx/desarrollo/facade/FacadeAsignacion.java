@@ -4,6 +4,7 @@ import mx.desarrollo.delegate.DelegateAsignacion;
 import mx.desarrollo.entity.Asignacion;
 import mx.desarrollo.persistence.integration.ServiceLocator;
 
+import java.time.LocalTime;
 import java.util.List;
 
 public class FacadeAsignacion {
@@ -28,6 +29,10 @@ public class FacadeAsignacion {
 
     public List<Asignacion> consultarPorNombreUnidad(String nombreUnidad) {
         return ServiceLocator.getInstanceAsignacionDAO().consultarPorNombreUnidad(nombreUnidad);
+    }
+
+    public boolean existeTraslape(Integer idProfesor, String diaSemana, LocalTime hrInicio, LocalTime hrFin, Integer idAsignacionActual) {
+        return delegateAsignacion.existeTraslape(idProfesor, diaSemana, hrInicio, hrFin, idAsignacionActual);
     }
 
     public void modificarAsignacion(Asignacion asignacion) {

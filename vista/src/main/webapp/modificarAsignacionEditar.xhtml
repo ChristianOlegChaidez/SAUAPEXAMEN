@@ -43,10 +43,23 @@
         </div>
 
         <h:form style="margin: 20px;">
+
+            <h:panelGroup id="panelMensaje">
+                <h:outputText value="#{modificarAsignacionUI.mensajeError}" style="color: red;" rendered="#{not empty modificarAsignacionUI.mensajeError}" />
+            </h:panelGroup>
+            <br/>
+
             <p:panel header="Editar Asignación" styleClass="form-editar">
 
-                <h:outputText value="Profesor: #{modificarAsignacionUI.asignacionSeleccionada.idProfesor.nombres} #{modificarAsignacionUI.asignacionSeleccionada.idProfesor.apellidoPaterno}" />
+                <p:outputLabel value="Profesor" />
+                <br/>
+                <p:selectOneMenu value="#{modificarAsignacionUI.asignacionSeleccionada.idProfesor}">
+                    <f:converter converterId="profesorConverter" />
+                    <f:selectItems value="#{modificarAsignacionUI.listaProfesores}" var="prof"
+                                   itemLabel="#{prof.nombres} #{prof.apellidoPaterno}" itemValue="#{prof}" />
+                </p:selectOneMenu>
                 <br/><br/>
+
                 <h:outputText value="Unidad: #{modificarAsignacionUI.asignacionSeleccionada.idUnidad.nombreUnidad}" />
                 <br/><br/>
 
@@ -84,8 +97,16 @@
                 </p:selectOneMenu>
                 <br/><br/>
 
-                <p:commandButton value="Modificar" action="#{modificarAsignacionUI.modificarConNavegacion()}" />
+                <p:commandButton value="Modificar" type="button" onclick="PF('dlgConfirmar').show()" />
             </p:panel>
+
+            <p:confirmDialog message="¿Estás seguro que quieres hacer la modificación?"
+                             header="Confirmar" severity="alert" widgetVar="dlgConfirmar">
+                <p:commandButton value="Sí" action="#{modificarAsignacionUI.modificarConNavegacion()}"
+                                 oncomplete="PF('dlgConfirmar').hide()" update="panelMensaje" />
+                <p:commandButton value="Cancelar" onclick="PF('dlgConfirmar').hide()" type="button" />
+            </p:confirmDialog>
+
         </h:form>
 
         <div class="piePagina">

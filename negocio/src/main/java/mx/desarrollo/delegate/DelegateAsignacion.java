@@ -3,6 +3,7 @@ package mx.desarrollo.delegate;
 import mx.desarrollo.entity.Asignacion;
 import mx.desarrollo.persistence.integration.ServiceLocator;
 
+import java.time.LocalTime;
 import java.util.List;
 
 public class DelegateAsignacion {
@@ -24,5 +25,9 @@ public class DelegateAsignacion {
 
     public void modificarAsignacion(Asignacion asignacion) {
         ServiceLocator.getInstanceAsignacionDAO().saveOrUpdate(asignacion);
+    }
+
+    public boolean existeTraslape(Integer idProfesor, String diaSemana, LocalTime hrInicio, LocalTime hrFin, Integer idAsignacionActual) {
+        return ServiceLocator.getInstanceAsignacionDAO().existeTraslape(idProfesor, diaSemana, hrInicio, hrFin, idAsignacionActual);
     }
 }
