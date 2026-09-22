@@ -42,6 +42,14 @@
                 flex-direction: column;
                 min-height: 100vh;
             }
+            .dialogo-exito .ui-dialog-titlebar {
+                background: #2E7D32 !important;
+                color: white !important;
+            }
+
+            .dialogo-exito .ui-dialog-content {
+                background: #D9D9D9 !important;
+            }
         </style>
     </h:head>
     <h:body>
@@ -50,7 +58,14 @@
         </div>
 
         <h:form style="margin: 20px;">
-            <h:outputText value="#{modificarAsignacionUI.mensajeExito}" style="color: green;" rendered="#{not empty modificarAsignacionUI.mensajeExito}" />
+            <p:dialog header="Exito" widgetVar="dlgExito" modal="true"
+                      visible="#{not empty modificarAsignacionUI.mensajeExito}"
+                      closable="true" resizable="false" width="350"
+                      styleClass="dialogo-exito">
+                <p:outputPanel style="text-align: center; padding: 10px;">
+                    <h:outputText value="#{modificarAsignacionUI.mensajeExito}" />
+                </p:outputPanel>
+            </p:dialog>
             <p:dataTable value="#{modificarAsignacionUI.resultadosBusqueda}" var="a" styleClass="tabla-asignaciones"
                          emptyMessage="No se encontraron asignaciones para esa unidad">
                 <p:column headerText="Profesor">
