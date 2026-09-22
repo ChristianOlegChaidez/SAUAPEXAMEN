@@ -50,6 +50,7 @@
         </div>
 
         <h:form style="margin: 20px;">
+            <h:outputText value="#{modificarAsignacionUI.mensajeExito}" style="color: green;" rendered="#{not empty modificarAsignacionUI.mensajeExito}" />
             <p:dataTable value="#{modificarAsignacionUI.resultadosBusqueda}" var="a" styleClass="tabla-asignaciones"
                          emptyMessage="No se encontraron asignaciones para esa unidad">
                 <p:column headerText="Profesor">

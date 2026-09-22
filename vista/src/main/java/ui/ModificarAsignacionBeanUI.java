@@ -18,8 +18,11 @@ public class ModificarAsignacionBeanUI implements Serializable{
     private Asignacion asignacionSeleccionada;
     private String mensajeError;
     private List<Profesor> listaProfesores;
+    private String mensajeExito;
 
     public String buscarPorUnidad() {
+        mensajeExito = null;
+        mensajeError = null;
         resultadosBusqueda = ServiceLocatorFacade.getInstanceFacadeAsignacion()
                 .consultarPorNombreUnidad(nombreUnidadBusqueda);
         return "modificarAsignacionResultados?faces-redirect=true";
@@ -37,16 +40,19 @@ public class ModificarAsignacionBeanUI implements Serializable{
 
     public String seleccionarYNavegar(Asignacion asignacion) {
         this.asignacionSeleccionada = asignacion;
+        this.mensajeExito = null;
+        this.mensajeError = null;
         return "modificarAsignacionEditar?faces-redirect=true";
     }
 
     public String modificarConNavegacion() {
         mensajeError = null;
+        mensajeExito = null;
 
         if (asignacionSeleccionada.getHrFin().isBefore(asignacionSeleccionada.getHrInicio())
                 || asignacionSeleccionada.getHrFin().equals(asignacionSeleccionada.getHrInicio())) {
             mensajeError = "La hora de fin debe ser posterior a la hora de inicio.";
-            return null;
+            return "modificarAsignacionResultados?faces-redirect=true";
         }
 
         long horasCapturadas = java.time.Duration.between(
@@ -81,7 +87,14 @@ public class ModificarAsignacionBeanUI implements Serializable{
         }
 
         modificar();
+        mensajeExito = "Modificacion realizada con exito";
         return "modificarAsignacionResultados?faces-redirect=true";
+    }
+
+
+
+    public String getMensajeExito() {
+        return mensajeExito;
     }
 
     public String getMensajeError() { return mensajeError; }
