@@ -1,0 +1,110 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="jakarta.faces.html"
+      xmlns:f="jakarta.faces.core"
+      xmlns:p="http://primefaces.org/ui">
+<h:head>
+    <title>Registrar asignación</title>
+    <style>
+        * { box-sizing: border-box; }
+        body { margin: 0; font-family: Arial, sans-serif; }
+        .encabezado { background: #2A714F; padding: 20px 16px; font-size: 24px; font-weight: bold; }
+        .contenido { padding: 30px; max-width: 720px; margin: auto; }
+        .campo { display: flex; flex-direction: column; gap: 6px; margin: 16px 0; }
+        .busqueda.ui-autocomplete { display: inline-flex; align-items: stretch; width: 340px; }
+        .busqueda .ui-autocomplete-input { flex: 1; min-width: 0; width: auto !important; }
+        .busqueda .ui-autocomplete-dropdown { flex: 0 0 42px; margin-left: 0 !important; }
+        .ui-growl { top: 42px !important; right: 20px !important; width: 320px !important; }
+        .ui-growl-item-container { background: #b9b9b9 !important; border: 0 !important; border-radius: 0 !important; box-shadow: none !important; }
+        .ui-growl-item { color: black !important; padding: 0 !important; }
+        .ui-growl-error .ui-growl-item:before, .ui-growl-info .ui-growl-item:before {
+            content: ""; display: block; height: 29px;
+        }
+        .ui-growl-error .ui-growl-item:before { background: #f52222; }
+        .ui-growl-info .ui-growl-item:before { background: #00a04a; }
+        .ui-growl-icon-close { color: white !important; right: 8px !important; top: 7px !important; z-index: 1; }
+        .ui-growl-item .ui-growl-image { display: none !important; }
+        .ui-growl-message { color: black !important; padding: 12px !important; margin: 0 !important; margin-left: 0 !important; width: 100% !important; float: none !important; text-align: left !important; }
+        .ui-growl-title { color: black !important; display: inline !important; font-size: 16px !important; }
+        .ui-growl-title:after { content: " : "; }
+        .ui-growl-message p { display: inline !important; margin: 0 !important; font-size: 16px !important; }
+        .horas { background: #e0e0e0; padding: 12px; border-radius: 6px; margin-top: 16px; }
+        .pie { position: fixed; bottom: 0; width: 100%; background: #c8b84a; padding: 15px; }
+        .pie a { color: black; font-size: 24px; text-decoration: none; }
+    </style>
+</h:head>
+<h:body>
+    <div class="encabezado">Registrar asignación</div>
+    <h:form id="formAsignacion">
+        <p:growl id="mensajes" showDetail="true" life="5000" />
+        <p:remoteCommand name="validarInicial" process="@form"
+                         actionListener="#{registroAsignacionBean.validarDatosIniciales}"
+                         update="mensajes horas horario" />
+        <div class="contenido">
+            <div class="campo">
+                <p:outputLabel for="profesor" value="Profesor *" />
+                <p:autoComplete id="profesor" value="#{registroAsignacionBean.nombreProfesor}"
+                                completeMethod="#{registroAsignacionBean.completarProfesores}"
+                                dropdown="true" styleClass="busqueda"
+                                onkeydown="if (event.key === 'Enter') { validarInicial(); return false; }">
+                    <p:ajax event="change" process="@form" listener="#{registroAsignacionBean.validarDatosIniciales}" update="mensajes horas horario" />
+                </p:autoComplete>
+            </div>
+
+            <div class="campo">
+                <p:outputLabel for="unidad" value="Unidad de aprendizaje *" />
+                <p:autoComplete id="unidad" value="#{registroAsignacionBean.nombreUnidad}"
+                                completeMethod="#{registroAsignacionBean.completarUnidades}"
+                                dropdown="true" styleClass="busqueda"
+                                onkeydown="if (event.key === 'Enter') { validarInicial(); return false; }">
+                    <p:ajax event="itemSelect" process="@form" listener="#{registroAsignacionBean.validarDatosIniciales}" update="mensajes horas horario" />
+                    <p:ajax event="change" process="@form" listener="#{registroAsignacionBean.validarDatosIniciales}" update="mensajes horas horario" />
+                </p:autoComplete>
+            </div>
+
+            <p:outputPanel id="horas">
+                <h:panelGroup layout="block" rendered="#{not empty registroAsignacionBean.unidadSeleccionada}" styleClass="horas">
+                    <strong>Total de horas semanales: #{registroAsignacionBean.totalHorasSemana}</strong><br />
+                    Clase: #{registroAsignacionBean.unidadSeleccionada.hrClase} | Taller: #{registroAsignacionBean.unidadSeleccionada.hrTaller} | Laboratorio: #{registroAsignacionBean.unidadSeleccionada.hrLaboratorio}
+                </h:panelGroup>
+            </p:outputPanel>
+
+            <p:outputPanel id="horario">
+            <h:panelGroup layout="block" rendered="#{not empty registroAsignacionBean.unidadSeleccionada}">
+                <div class="campo">
+                    <p:outputLabel for="tipo" value="Tipo de horario *" />
+                    <p:selectOneMenu id="tipo" value="#{registroAsignacionBean.tipoHora}" required="true" requiredMessage="Selecciona un tipo de horario.">
+                        <f:selectItem itemLabel="Selecciona" itemValue="" noSelectionOption="true" />
+                        <f:selectItem itemLabel="Clase (#{registroAsignacionBean.unidadSeleccionada.hrClase} h)" itemValue="Clase" />
+                        <f:selectItem itemLabel="Taller (#{registroAsignacionBean.unidadSeleccionada.hrTaller} h)" itemValue="Taller" />
+                        <f:selectItem itemLabel="Laboratorio (#{registroAsignacionBean.unidadSeleccionada.hrLaboratorio} h)" itemValue="Laboratorio" />
+                    </p:selectOneMenu>
+                </div>
+                <div class="campo">
+                    <p:outputLabel for="dia" value="Día *" />
+                    <p:selectOneMenu id="dia" value="#{registroAsignacionBean.diaSemana}" required="true" requiredMessage="Selecciona un día.">
+                        <f:selectItem itemLabel="Selecciona" itemValue="" noSelectionOption="true" />
+                        <f:selectItem itemLabel="Lunes" itemValue="Lunes" /><f:selectItem itemLabel="Martes" itemValue="Martes" />
+                        <f:selectItem itemLabel="Miércoles" itemValue="Miércoles" /><f:selectItem itemLabel="Jueves" itemValue="Jueves" />
+                        <f:selectItem itemLabel="Viernes" itemValue="Viernes" />
+                    </p:selectOneMenu>
+                </div>
+                <div class="campo">
+                    <p:outputLabel for="inicio" value="Hora de inicio *" />
+                    <p:datePicker id="inicio" value="#{registroAsignacionBean.horaInicio}" timeOnly="true" pattern="HH:mm" required="true" requiredMessage="Captura la hora de inicio.">
+                        <f:convertDateTime type="localTime" pattern="HH:mm" />
+                    </p:datePicker>
+                </div>
+                <p:commandButton value="Registrar" type="button" onclick="PF('confirmarAsignacion').show()" />
+            </h:panelGroup>
+            </p:outputPanel>
+        </div>
+        <p:confirmDialog widgetVar="confirmarAsignacion" header="Confirmar asignación" message="¿Deseas registrar esta asignación?" severity="alert">
+            <p:commandButton value="Sí, registrar" action="#{registroAsignacionBean.registrar}" update="formAsignacion" oncomplete="PF('confirmarAsignacion').hide()" />
+            <p:commandButton value="Cancelar" type="button" onclick="PF('confirmarAsignacion').hide()" />
+        </p:confirmDialog>
+    </h:form>
+    <div class="pie"><a href="index.xhtml" title="Regresar">←</a></div>
+</h:body>
+</html>

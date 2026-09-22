@@ -46,7 +46,7 @@ public class AsignacionDAO extends AbstractDAO<Asignacion> {
         List<Asignacion> resultado = entityManager
                 .createQuery("FROM Asignacion a WHERE a.idProfesor.id = :idProfesor " +
                         "AND a.diaSemana = :dia " +
-                        "AND a.id != :idActual " +
+                        "AND (:idActual IS NULL OR a.id != :idActual) " +
                         "AND a.hrInicio < :hrFin AND a.hrFin > :hrInicio", Asignacion.class)
                 .setParameter("idProfesor", idProfesor)
                 .setParameter("dia", diaSemana)
