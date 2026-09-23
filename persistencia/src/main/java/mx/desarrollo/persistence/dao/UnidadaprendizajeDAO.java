@@ -21,6 +21,12 @@ public class UnidadaprendizajeDAO extends AbstractDAO<Unidadaprendizaje> {
                 .getResultList();
     }
 
+    public List<Unidadaprendizaje> obtenerTodosOrdenadosPorNombre() {
+        return entityManager
+                .createQuery("SELECT u FROM Unidadaprendizaje u ORDER BY u.nombreUnidad", Unidadaprendizaje.class)
+                .getResultList();
+    }
+
     @Override
     public EntityManager getEntityManager() {
         return entityManager;

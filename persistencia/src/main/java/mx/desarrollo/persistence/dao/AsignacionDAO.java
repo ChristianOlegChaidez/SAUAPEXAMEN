@@ -42,6 +42,14 @@ public class AsignacionDAO extends AbstractDAO<Asignacion> {
                 .getResultList();
     }
 
+    public boolean existenPorUnidad(Integer idUnidad) {
+        Long total = entityManager
+                .createQuery("SELECT COUNT(a) FROM Asignacion a WHERE a.idUnidad.id = :idUnidad", Long.class)
+                .setParameter("idUnidad", idUnidad)
+                .getSingleResult();
+        return total > 0;
+    }
+
     public boolean existeTraslape(Integer idProfesor, String diaSemana, LocalTime hrInicio, LocalTime hrFin, Integer idAsignacionActual) {
         List<Asignacion> resultado = entityManager
                 .createQuery("FROM Asignacion a WHERE a.idProfesor.id = :idProfesor " +

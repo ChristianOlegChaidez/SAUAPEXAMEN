@@ -19,8 +19,20 @@ public class FacadeUnidad {
         delegateUnidad.saveUnidad(unidad);
     }
 
+    public void registrarUnidad(String nombre, String hrClase, String hrTaller, String hrLaboratorio) {
+        delegateUnidad.registrarUnidad(nombre, hrClase, hrTaller, hrLaboratorio);
+    }
+
     public List<Unidadaprendizaje> obtenerTodos() {
         return delegateUnidad.obtenerTodos();
+    }
+
+    public List<Unidadaprendizaje> consultarOrdenadasPorNombre() {
+        return delegateUnidad.consultarOrdenadasPorNombre();
+    }
+
+    public List<Unidadaprendizaje> eliminarUnidad(Integer idUnidad) {
+        return delegateUnidad.eliminarUnidad(idUnidad);
     }
 
     public List<Unidadaprendizaje> buscarPorNombre(String nombre){
