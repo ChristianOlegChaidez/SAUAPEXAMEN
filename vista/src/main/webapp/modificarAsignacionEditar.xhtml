@@ -43,11 +43,11 @@
         </div>
 
         <h:form style="margin: 20px;">
-
+            <br/>
             <h:panelGroup id="panelMensaje">
                 <h:outputText value="#{modificarAsignacionUI.mensajeError}" style="color: red;" rendered="#{not empty modificarAsignacionUI.mensajeError}" />
+                <h:outputText value="#{modificarAsignacionUI.mensajeExito}" style="color: green;" rendered="#{not empty modificarAsignacionUI.mensajeExito}" />
             </h:panelGroup>
-            <br/>
 
             <p:panel header="Editar Asignación" styleClass="form-editar">
 

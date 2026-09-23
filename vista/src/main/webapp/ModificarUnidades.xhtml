@@ -1,0 +1,237 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+<h:head>
+    <title>Modificar Unidad de Aprendizaje - SAUP</title>
+</h:head>
+<h:body>
+    <h:form id="frmModificar">
+
+        <p:growl id="growlValidaciones"
+                 showDetail="true"
+                 sticky="false"
+                 life="4000"
+                 closable="true" />
+
+        <p:confirmDialog widgetVar="dlgConfirmar"
+                         message="Estas seguro que quieres hacer la modificacion?"
+                         showEffect="fade" hideEffect="fade"
+                         styleClass="dlgConfirmarAzul">
+            <p:commandButton value="Si"
+                             action="#{modificarUnidadUI.confirmarModificacion}"
+                             update="frmModificar"
+                             oncomplete="PF('dlgConfirmar').hide();"
+                             styleClass="btn-si" />
+            <p:commandButton value="Cancelar"
+                             type="button"
+                             onclick="PF('dlgConfirmar').hide();"
+                             styleClass="btn-cancelar" />
+        </p:confirmDialog>
+
+        <div class="contenedorPrincipal">
+            <div class="tarjeta">
+                <div class="cabecera">Modificar Unidad de Aprendizaje</div>
+
+                <div class="cuerpo">
+
+
+                    <h3 class="tituloCentro">Unidad de Aprendizaje</h3>
+
+                    <div class="centrado">
+                        <p:selectOneMenu value="#{modificarUnidadUI.nombreSeleccionado}" style="width:420px;">
+                            <f:selectItem itemLabel="Nombre de la unidad de aprendizaje" itemValue="" />
+                            <f:selectItems value="#{modificarUnidadUI.nombreDisponibles}" />
+                            <p:ajax event="change"
+                                    listener="#{modificarUnidadUI.cargarUnidad}"
+                                    update="panelEdicion" />
+                        </p:selectOneMenu>
+                    </div>
+
+                    <h:panelGroup id="panelEdicion" layout="block">
+                        <h:panelGroup layout="block" rendered="#{not empty modificarUnidadUI.unidad}" styleClass="bloqueEdicion">
+
+                            <h3 class="tituloCentro">Nombre</h3>
+                            <div class="centrado">
+                                <p:inputText value="#{modificarUnidadUI.unidad.nombreUnidad}" style="width:420px;" />
+                            </div>
+
+                            <div class="filaHoras">
+                                <div class="campoHora">
+                                    <label class="etiquetaHora">Hrs Clase</label><br/>
+                                    <p:inputNumber value="#{modificarUnidadUI.unidad.hrClase}" decimalPlaces="0" style="width:110px;" />
+                                </div>
+                                <div class="campoHora">
+                                    <label class="etiquetaHora">Hrs Taller</label><br/>
+                                    <p:inputNumber value="#{modificarUnidadUI.unidad.hrTaller}" decimalPlaces="0" style="width:110px;" />
+                                </div>
+                                <div class="campoHora">
+                                    <label class="etiquetaHora">Hrs Labs</label><br/>
+                                    <p:inputNumber value="#{modificarUnidadUI.unidad.hrLaboratorio}" decimalPlaces="0" style="width:110px;" />
+                                </div>
+                            </div>
+
+                            <p class="hintHoras">Hrs: 0hrs min - 4hrs max</p>
+
+                            <div class="centrado">
+                                <p:commandButton value="Confirmar"
+                                                 action="#{modificarUnidadUI.prepararConfirmacion}"
+                                                 update="growlValidaciones"
+                                                 styleClass="btn-confirmar" />
+                            </div>
+
+                        </h:panelGroup>
+                    </h:panelGroup>
+
+                </div>
+
+                <h:link outcome="index" styleClass="piePagina">
+                    <h:outputText value="&#8592;" escape="false" />
+                </h:link>
+            </div>
+        </div>
+    </h:form>
+
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+            font-family: "Segoe UI", Arial, sans-serif;
+            background-color: #f4f4f4;
+        }
+        .contenedorPrincipal {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            padding: 50px 20px;
+            min-height: 100vh;
+            box-sizing: border-box;
+        }
+        .tarjeta {
+            width: 950px;
+            max-width: 96vw;
+            background: white;
+            box-shadow: 0 6px 16px 0 rgba(0,0,0,0.15);
+            overflow: hidden;
+            border-radius: 4px;
+            height : auto;
+        }
+        .cabecera {
+            background-color: #1f7a4d;
+            color: white;
+            font-weight: bold;
+            font-size: 32px;
+            padding: 28px 40px;
+        }
+        .cuerpo {
+            padding: 35px 50px 45px 50px;
+        }
+        .vistaLabel {
+            margin: 0 0 25px 0;
+            font-size: 18px;
+            color: #555;
+        }
+        .tituloCentro {
+            text-align: center;
+            margin: 25px 0 18px 0;
+            color: #333;
+            font-size: 22px;
+        }
+        .centrado {
+            display: flex;
+            justify-content: center;
+        }
+        .bloqueEdicion {
+            margin-top: 20px;
+        }
+        .filaHoras {
+            display: flex;
+            justify-content: center;
+            gap: 70px;
+            margin-top: 25px;
+        }
+        .campoHora {
+            text-align: center;
+        }
+        .etiquetaHora {
+            font-size: 16px;
+            font-weight: 500;
+        }
+        .hintHoras {
+            text-align: center;
+            font-size: 14px;
+            color: #777;
+            margin: 20px 0 25px 0;
+        }
+        .btn-confirmar {
+            background-color: #6bb000 !important;
+            border: none !important;
+            color: white !important;
+            padding: 14px 45px !important;
+            font-size: 18px !important;
+        }
+        .piePagina {
+            display: block;
+            background-color: #c9c17a;
+            padding: 20px 40px;
+            font-size: 28px;
+            text-decoration: none;
+            color: black;
+        }
+
+        .ui-selectonemenu,
+        .ui-inputtext,
+        .ui-inputnumber-input {
+            height: 46px !important;
+            font-size: 17px !important;
+        }
+
+        .ui-growl {
+            font-size: 14px;
+        }
+        .ui-growl-image {
+            display: none !important;
+        }
+        .ui-growl-item.ui-growl-message-error,
+        .ui-growl-item.ui-growl-message-warn {
+            background-color: #f5c518 !important;
+            border-color: #d4a900 !important;
+        }
+        .ui-growl-item.ui-growl-message-error .ui-growl-title,
+        .ui-growl-item.ui-growl-message-error .ui-growl-message,
+        .ui-growl-item.ui-growl-message-warn .ui-growl-title,
+        .ui-growl-item.ui-growl-message-warn .ui-growl-message {
+            color: #4a3b00 !important;
+        }
+        .ui-growl-item.ui-growl-message-info {
+            background-color: #1f9d55 !important;
+            border-color: #1a7d45 !important;
+        }
+        .ui-growl-item.ui-growl-message-info .ui-growl-title,
+        .ui-growl-item.ui-growl-message-info .ui-growl-message {
+            color: white !important;
+        }
+        .ui-growl-icon-close {
+            color: inherit !important;
+        }
+
+        .dlgConfirmarAzul .ui-dialog-titlebar {
+            background-color: #1e88e5 !important;
+            color: white !important;
+        }
+        .btn-si {
+            background-color: #1f7a4d !important;
+            border: none !important;
+            color: white !important;
+            margin-right: 10px;
+        }
+        .btn-cancelar {
+            background-color: #999 !important;
+            border: none !important;
+            color: white !important;
+        }
+    </style>
+</h:body>
+</html>
