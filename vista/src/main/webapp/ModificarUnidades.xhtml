@@ -36,7 +36,7 @@
                 <div class="cabecera">Modificar Unidad de Aprendizaje</div>
 
                 <div class="cuerpo">
-                    <p class="vistaLabel">Vista Administrador</p>
+
 
                     <h3 class="tituloCentro">Unidad de Aprendizaje</h3>
 
@@ -79,7 +79,6 @@
                                 <p:commandButton value="Confirmar"
                                                  action="#{modificarUnidadUI.prepararConfirmacion}"
                                                  update="growlValidaciones"
-                                                 oncomplete="if (#{modificarUnidadUI.listoParaConfirmar}) { PF('dlgConfirmar').show(); }"
                                                  styleClass="btn-confirmar" />
                             </div>
 
@@ -88,7 +87,7 @@
 
                 </div>
 
-                <h:link outcome="ConsultadosUnidadesdeAprendizaje" styleClass="piePagina">
+                <h:link outcome="index" styleClass="piePagina">
                     <h:outputText value="&#8592;" escape="false" />
                 </h:link>
             </div>
@@ -105,6 +104,7 @@
         .contenedorPrincipal {
             display: flex;
             justify-content: center;
+            align-items: flex-start;
             padding: 50px 20px;
             min-height: 100vh;
             box-sizing: border-box;
@@ -116,6 +116,7 @@
             box-shadow: 0 6px 16px 0 rgba(0,0,0,0.15);
             overflow: hidden;
             border-radius: 4px;
+            height : auto;
         }
         .cabecera {
             background-color: #1f7a4d;

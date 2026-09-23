@@ -24,10 +24,7 @@ public class ServiceLocator {
     }
 
     public static UnidadaprendizajeDAO getInstanceUnidadDAO() {
-        if (unidadDAO == null) {
-            unidadDAO = new UnidadaprendizajeDAO(getEntityManager());
-        }
-        return unidadDAO;
+        return new UnidadaprendizajeDAO(HibernateUtil.getEntityManager());
     }
 
     public static AsignacionDAO getInstanceAsignacionDAO() {

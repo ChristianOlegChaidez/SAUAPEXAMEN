@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="es"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="jakarta.faces.html"
+      xmlns:p="http://primefaces.org/ui">
+<h:head>
+    <title>Eliminar asignacion</title>
+    <style>
+        html, body { height: 100%; margin: 0; font-family: Arial, sans-serif; }
+        body { display: flex; flex-direction: column; }
+        .encabezado { background: #2A714F; color: black; padding: 15px; }
+        .contenido { flex: 1; padding: 35px; }
+        .piePagina { background: #A29201; padding: 15px; font-size: 24px; }
+        .tabla-asignaciones th.ui-state-default { background: #DEDEDE !important; color: #000 !important; }
+        .tabla-asignaciones tbody tr { background: #D9D9D9 !important; }
+        .boton-eliminar.ui-button { color: #B71C1C !important; background: transparent !important; border: 0 !important; }
+        .dialogo-confirmacion .ui-dialog-titlebar { background: #DEDEDE !important; color: #D00000 !important; }
+        .mensaje-exito { width: 320px; margin: 0 0 20px auto; box-shadow: 0 2px 5px #777; }
+        .mensaje-exito-titulo { background: #009B4C; color: white; padding: 7px 10px; text-align: right; }
+        .mensaje-exito-cuerpo { background: #B0B0B0; color: black; padding: 28px 25px; font-size: 16px; }
+        .cerrar-mensaje.ui-button { background: transparent !important; border: 0 !important; color: white !important; padding: 0 !important; }
+    </style>
+</h:head>
+<h:body>
+    <div class="encabezado">
+        <h1 style="margin: 0">Eliminar Asignacion</h1>
+    </div>
+
+    <h:form id="formEliminar" styleClass="contenido">
+        <p:growl id="mensajes" showDetail="true" />
+        <p:outputPanel id="mensajeExito">
+            <p:outputPanel rendered="#{eliminarAsignacionUI.eliminacionExitosa}" styleClass="mensaje-exito">
+                <div class="mensaje-exito-titulo">
+                    <p:commandButton value="X" action="#{eliminarAsignacionUI.ocultarMensajeExito}"
+                                     update=":formEliminar:mensajeExito" styleClass="cerrar-mensaje" />
+                </div>
+                <div class="mensaje-exito-cuerpo">Exito : Se elimino la asignacion con exito.</div>
+            </p:outputPanel>
+        </p:outputPanel>
+
+        <p:outputPanel id="asignaciones">
+            <h2 style="text-align: center">Asignaciones</h2>
+            <p:dataTable value="#{eliminarAsignacionUI.listaAsignaciones}" var="asignacion"
+                         rendered="#{not empty eliminarAsignacionUI.listaAsignaciones}"
+                         styleClass="tabla-asignaciones" style="max-width: 850px; margin: auto;">
+                <p:column headerText="Asignaciones registradas">
+                    <h:outputText value="#{asignacion.idProfesor.nombres} #{asignacion.idProfesor.apellidoPaterno} - #{asignacion.idUnidad.nombreUnidad}" />
+                </p:column>
+                <p:column style="width: 110px; text-align: center">
+                    <p:commandButton value="ELIMINAR" process="@this"
+                                     action="#{eliminarAsignacionUI.seleccionarAsignacion(asignacion)}"
+                                     update=":formEliminar:confirmacion" oncomplete="PF('confirmacionEliminacion').show()"
+                                     styleClass="boton-eliminar" />
+                </p:column>
+            </p:dataTable>
+
+            <p:outputPanel rendered="#{empty eliminarAsignacionUI.listaAsignaciones}" style="display: block; text-align: center; padding: 30px;">
+                <h:outputText value="Error: No hay asignaciones disponibles." />
+            </p:outputPanel>
+        </p:outputPanel>
+
+        <p:dialog id="confirmacion" widgetVar="confirmacionEliminacion" header="Confirmar eliminacion"
+                  modal="true" closable="false" resizable="false" styleClass="dialogo-confirmacion">
+            <p:outputPanel rendered="#{not empty eliminarAsignacionUI.asignacionSeleccionada}">
+                <h:outputText value="Seguro que quieres eliminar esta asignacion?" style="color: red; font-weight: bold; display: block; margin-bottom: 10px;" />
+                <h:outputText value="Profesor: #{eliminarAsignacionUI.asignacionSeleccionada.idProfesor.nombres} #{eliminarAsignacionUI.asignacionSeleccionada.idProfesor.apellidoPaterno}" style="display: block;" />
+                <h:outputText value="Unidad de aprendizaje: #{eliminarAsignacionUI.asignacionSeleccionada.idUnidad.nombreUnidad}" style="display: block; margin-bottom: 12px;" />
+                <p:commandButton value="Cancelar" type="button" onclick="PF('confirmacionEliminacion').hide()" />
+                <p:commandButton value="Eliminar" action="#{eliminarAsignacionUI.eliminarAsignacion}"
+                                 update=":formEliminar:asignaciones :formEliminar:mensajes :formEliminar:mensajeExito :formEliminar:confirmacion"
+                                 oncomplete="PF('confirmacionEliminacion').hide()" />
+            </p:outputPanel>
+        </p:dialog>
+    </h:form>
+
+    <div class="piePagina">
+        <h:link outcome="index" value="←" />
+    </div>
+</h:body>
+</html>

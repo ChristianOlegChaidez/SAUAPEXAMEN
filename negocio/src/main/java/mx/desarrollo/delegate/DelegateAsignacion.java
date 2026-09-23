@@ -30,4 +30,8 @@ public class DelegateAsignacion {
     public boolean existeTraslape(Integer idProfesor, String diaSemana, LocalTime hrInicio, LocalTime hrFin, Integer idAsignacionActual) {
         return ServiceLocator.getInstanceAsignacionDAO().existeTraslape(idProfesor, diaSemana, hrInicio, hrFin, idAsignacionActual);
     }
+
+    public boolean eliminarAsignacion(Integer idAsignacion) {
+        return ServiceLocator.getInstanceAsignacionDAO().eliminarAsignacion(idAsignacion);
+    }
 }
