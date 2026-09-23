@@ -1,0 +1,175 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+<h:head>
+    <title>Unidades de Aprendizaje - SAUP</title>
+</h:head>
+<h:body>
+    <h:form id="frmUnidades">
+
+
+        <p:growl id="growlValidaciones"
+                 showDetail="true"
+                 sticky="true"
+                 closable="true"
+                 life="6000" />
+
+        <div class="contenedorPrincipal">
+
+            <div class="tarjeta">
+                <div class="cabecera">Consulta de Unidades de Aprendizaje</div>
+
+                <div class="cuerpo">
+                    <p class="vistaLabel">Vista Administrador</p>
+
+                    <div class="filaBusqueda">
+                        <div>
+                            <label class="etiqueta">Búsqueda por unidad</label><br/>
+                            <p:selectOneMenu value="#{unidadUI.nombreSeleccionado}" style="width:400px;">
+                                <f:selectItem itemLabel="Nombre de la unidad de aprendizaje" itemValue="" />
+                                <f:selectItems value="#{unidadUI.nombreDisponibles}" />
+                            </p:selectOneMenu>
+                        </div>
+
+                        <p:commandButton value="Consultar"
+                                         icon="pi pi-search"
+                                         action="#{unidadUI.consultar}"
+                                         update="frmUnidades:tblUnidades frmUnidades:growlValidaciones"
+                                         styleClass="btn-consultar" />
+                    </div>
+
+                    <p:dataTable id="tblUnidades"
+                                 value="#{unidadUI.resultados}"
+                                 var="unidad"
+                                 styleClass="tablaUnidades">
+                        <p:column headerText="Unidad de aprendizaje">
+                            <h:outputText value="#{unidad.nombreUnidad}" />
+                        </p:column>
+                        <p:column headerText="Hrs Clase" style="width:130px;text-align:center;">
+                            <h:outputText value="#{unidad.hrClase}" />
+                        </p:column>
+                        <p:column headerText="Hrs Taller" style="width:130px;text-align:center;">
+                            <h:outputText value="#{unidad.hrTaller}" />
+                        </p:column>
+                        <p:column headerText="Hrs Labs" style="width:130px;text-align:center;">
+                            <h:outputText value="#{unidad.hrLaboratorio}" />
+                        </p:column>
+                    </p:dataTable>
+                </div>
+
+                <h:link outcome="index" styleClass="piePagina">
+                    <h:outputText value="&#8592;" escape="false" />
+                </h:link>
+            </div>
+
+        </div>
+    </h:form>
+
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+            font-family: "Segoe UI", Arial, sans-serif;
+            background-color: #f4f4f4;
+        }
+        .contenedorPrincipal {
+            display: flex;
+            gap: 30px;
+            align-items: flex-start;
+            justify-content: center;
+            padding: 40px 20px;
+            min-height: 100vh;
+            box-sizing: border-box;
+        }
+        .tarjeta {
+            width: 1100px;
+            max-width: 95vw;
+            background: white;
+            box-shadow: 0 6px 16px 0 rgba(0,0,0,0.15);
+            overflow: hidden;
+            border-radius: 4px;
+        }
+        .cabecera {
+            background-color: #1f7a4d;
+            color: white;
+            font-weight: bold;
+            font-size: 26px;
+            padding: 22px 30px;
+        }
+        .cuerpo {
+            padding: 25px 30px 30px 30px;
+        }
+        .vistaLabel {
+            margin: 0 0 20px 0;
+            font-size: 16px;
+            color: #555;
+        }
+        .filaBusqueda {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        .etiqueta {
+            font-size: 15px;
+            font-weight: 500;
+        }
+        .btn-consultar {
+            background-color: #6bb000 !important;
+            border: none !important;
+            color: white !important;
+        }
+        .piePagina {
+            display: block;
+            background-color: #c9c17a;
+            padding: 15px 30px;
+            font-size: 26px;
+            text-decoration: none;
+            color: black;
+        }
+        .tablaUnidades .ui-datatable-thead > tr > th {
+            background-color: #6bb000;
+            color: white;
+            font-size: 15px;
+            padding: 12px;
+        }
+        .tablaUnidades .ui-datatable-tbody > tr > td {
+            font-size: 15px;
+            padding: 12px;
+        }
+        .ui-selectonemenu {
+            height: 42px;
+            font-size: 15px;
+        }
+        .ui-button, .ui-commandbutton {
+            font-size: 15px;
+            padding: 8px 20px;
+        }
+
+        /* Estilo del toast de PrimeFaces para que se vea como notificación de error/advertencia clara */
+        .ui-growl-item-container.ui-state-error {
+            background-color: #d9302f !important;
+            border-color: #d9302f !important;
+            color: white !important;
+        }
+        .ui-growl-item-container.ui-state-error .ui-growl-title,
+        .ui-growl-item-container.ui-state-error .ui-growl-message {
+            color: white !important;
+        }
+        .ui-growl-item-container.ui-state-warn {
+            background-color: #d9302f !important;
+            border-color: #d9302f !important;
+            color: white !important;
+        }
+        .ui-growl-item-container.ui-state-warn .ui-growl-title,
+        .ui-growl-item-container.ui-state-warn .ui-growl-message {
+            color: white !important;
+        }
+    </style>
+</h:body>
+</html>
