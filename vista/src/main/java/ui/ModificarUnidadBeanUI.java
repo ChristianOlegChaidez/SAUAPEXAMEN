@@ -7,6 +7,7 @@ import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Named;
 import mx.desarrollo.entity.Unidadaprendizaje;
 import mx.desarrollo.integration.ServiceLocatorFacade;
+import org.primefaces.PrimeFaces;
 
 import java.io.Serializable;
 import java.util.List;
@@ -14,7 +15,7 @@ import java.util.stream.Collectors;
 
 @Named("modificarUnidadUI")
 @ViewScoped
-public class ModificarUnidadBean implements Serializable {
+public class ModificarUnidadBeanUI implements Serializable {
 
     private List<String> nombreDisponibles;
     private String nombreSeleccionado;
@@ -67,6 +68,9 @@ public class ModificarUnidadBean implements Serializable {
 
     public void prepararConfirmacion() {
         listoParaConfirmar = validar();
+        if (listoParaConfirmar) {
+            PrimeFaces.current().executeScript("PF('dlgConfirmar').show();");
+        }
     }
 
     private boolean validar() {
@@ -106,6 +110,7 @@ public class ModificarUnidadBean implements Serializable {
     }
 
     public void confirmarModificacion() {
+        System.out.println("Modificando ID:" + unidad.getId() + "Nuevo nombre" + unidad.getNombreUnidad());
         boolean cambioNombre = !unidad.getNombreUnidad().equals(nombreOriginal);
         boolean cambioHoras = !unidad.getHrClase().equals(hrClaseOriginal)
                 || !unidad.getHrTaller().equals(hrTallerOriginal)
