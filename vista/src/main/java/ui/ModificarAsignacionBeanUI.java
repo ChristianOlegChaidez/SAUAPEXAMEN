@@ -52,7 +52,7 @@ public class ModificarAsignacionBeanUI implements Serializable{
         if (asignacionSeleccionada.getHrFin().isBefore(asignacionSeleccionada.getHrInicio())
                 || asignacionSeleccionada.getHrFin().equals(asignacionSeleccionada.getHrInicio())) {
             mensajeError = "La hora de fin debe ser posterior a la hora de inicio.";
-            return "modificarAsignacionResultados?faces-redirect=true";
+            return null;
         }
 
         long horasCapturadas = java.time.Duration.between(
