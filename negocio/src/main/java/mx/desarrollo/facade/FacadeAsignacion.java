@@ -38,4 +38,8 @@ public class FacadeAsignacion {
     public void modificarAsignacion(Asignacion asignacion) {
         delegateAsignacion.modificarAsignacion(asignacion);
     }
+
+    public boolean eliminarAsignacion(Integer idAsignacion) {
+        return delegateAsignacion.eliminarAsignacion(idAsignacion);
+    }
 }

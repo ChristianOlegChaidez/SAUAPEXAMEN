@@ -57,6 +57,19 @@ public class AsignacionDAO extends AbstractDAO<Asignacion> {
         return !resultado.isEmpty();
     }
 
+    public boolean eliminarAsignacion(Integer idAsignacion) {
+        return execute(em -> {
+            Asignacion asignacion = em.find(Asignacion.class, idAsignacion);
+
+            if (asignacion == null) {
+                return false;
+            }
+
+            em.remove(asignacion);
+            return true;
+        });
+    }
+
     @Override
     public EntityManager getEntityManager() {
         return entityManager;
